@@ -1,11 +1,14 @@
 package com.backend.java.shoppingapi.service;
 
 import com.backend.java.shoppingapi.dto.ShopDTO;
+import com.backend.java.shoppingapi.dto.ShopReportDTO;
 import com.backend.java.shoppingapi.model.Shop;
+import com.backend.java.shoppingapi.repository.ReportRepository;
 import com.backend.java.shoppingapi.repository.ShopRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
@@ -15,6 +18,8 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class ShopService {
     private final ShopRepository shopRepository;
+
+    private final ReportRepository reportRepository;
 
     public List<ShopDTO> getAll() {
         List<Shop> shops = shopRepository.findAll();
@@ -59,5 +64,18 @@ public class ShopService {
         shop.setDate(LocalDateTime.now());
         shop = shopRepository.save(shop);
         return ShopDTO.convert(shop);
+    }
+
+    public List<ShopDTO> getShopsByFilter(LocalDate dataInicio, LocalDate dataFim, Float valorMinimo) {
+        List<Shop> shops = reportRepository
+                .getShopByFilters(dataInicio, dataFim, valorMinimo);
+        return shops
+                .stream()
+                .map(ShopDTO::convert)
+                .collect(Collectors.toList());
+    }
+
+    public ShopReportDTO getReportByDate(LocalDate dataInicio, LocalDate dataFim) {
+        return reportRepository.getReportByDate(dataInicio, dataFim);
     }
 }
