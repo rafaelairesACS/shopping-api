@@ -7,7 +7,7 @@ import com.backend.java.shoppingapi.model.Shop;
 import com.backend.java.shoppingapi.repository.ReportRepository;
 import com.backend.java.shoppingapi.repository.ShopRepository;
 import com.backend.java.shoppingapi.dto.ItemDTO;
-import com.santana.java.back.end.ProductDTO;
+import com.santana.java.back.end.dto.ProductDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

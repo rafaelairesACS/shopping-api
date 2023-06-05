@@ -1,6 +1,8 @@
 package com.backend.java.shoppingapi.service;
 
-import com.santana.java.back.end.ProductDTO;
+
+import com.santana.java.back.end.dto.ProductDTO;
+import com.santana.java.back.end.exceptions.ProductNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Mono;
@@ -20,7 +22,7 @@ public class ProductService {
                     .bodyToMono(ProductDTO.class);
             return product.block();
         } catch (Exception e) {
-            throw new RuntimeException("Product	not	found");
+            throw new ProductNotFoundException();
         }
     }
 
