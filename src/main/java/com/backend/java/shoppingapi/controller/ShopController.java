@@ -38,8 +38,10 @@ public class ShopController {
 
     @PostMapping("/shopping")
     @ResponseStatus(HttpStatus.CREATED)
-    public ShopDTO newShop(@Valid @RequestBody ShopDTO shopDTO) {
-        return shopService.save(shopDTO);
+    public ShopDTO newShop(
+            @Valid @RequestBody ShopDTO shopDTO,
+            @RequestHeader(name = "key",required = true)String key) {
+        return shopService.save(shopDTO, key);
     }
 
     @GetMapping("/shopping/search")

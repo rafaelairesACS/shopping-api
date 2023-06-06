@@ -8,6 +8,7 @@ import com.backend.java.shoppingapi.repository.ReportRepository;
 import com.backend.java.shoppingapi.repository.ShopRepository;
 import com.backend.java.shoppingapi.dto.ItemDTO;
 import com.santana.java.back.end.dto.ProductDTO;
+import com.santana.java.back.end.dto.UserDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -60,14 +61,10 @@ public class ShopService {
         return null;
     }
 
-    public ShopDTO save(ShopDTO shopDTO) {
-        if (userService
-                .getUserByCpf(shopDTO.getUserIdentifier()) == null) {
-            return null;
-        }
-        if (!validateProducts(shopDTO.getItems())) {
-            return null;
-        }
+    public ShopDTO save(ShopDTO shopDTO, String key) {
+        UserDTO userDTO = userService
+                .getUserByCpf(shopDTO.getUserIdentifier(), key);
+        validateProducts(shopDTO.getItems());
         shopDTO.setTotal(shopDTO.getItems()
                 .stream()
                 .map(x -> x.getPrice())

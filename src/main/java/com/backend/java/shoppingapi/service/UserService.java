@@ -11,13 +11,13 @@ import reactor.core.publisher.Mono;
 public class UserService {
     private String userApiURL = "http://localhost:8080";
 
-    public UserDTO getUserByCpf(String cpf) {
+    public UserDTO getUserByCpf(String cpf, String key) {
         try {
             WebClient webClient = WebClient.builder()
                     .baseUrl(userApiURL)
                     .build();
             Mono<UserDTO> user = webClient.get()
-                    .uri("/user/" + cpf + "/cpf")
+                    .uri("/user/" + cpf + "/cpf?key=" + key)
                     .retrieve()
                     .bodyToMono(UserDTO.class);
             return user.block();
