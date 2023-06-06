@@ -2,6 +2,7 @@ package com.backend.java.shoppingapi.service;
 
 
 import com.santana.java.back.end.dto.UserDTO;
+import com.santana.java.back.end.exceptions.UserNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Mono;
@@ -21,7 +22,7 @@ public class UserService {
                     .bodyToMono(UserDTO.class);
             return user.block();
         } catch (Exception e) {
-            throw new RuntimeException("User not found");
+            throw new UserNotFoundException();
         }
     }
 }
